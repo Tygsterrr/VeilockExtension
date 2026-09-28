@@ -1,0 +1,1 @@
+console.log("Veilock background service started.");

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veilock</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Veilock</h1>
+
+        <p class="subtitle">
+            Website Security
+        </p>
+
+        <div class="website-section">
+            <h2>Current Website</h2>
+            <p id="currentWebsite">Loading...</p>
+        </div>
+
+        <div class="status-section">
+            <h2>Status</h2>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                <span id="statusText">Not Analyzed</span>
+            </div>
+        </div>
+
+        <button id="analyzeButton">
+            Analyze Website
+        </button>
+
+        <button id="settingsButton" class="secondary">
+            Settings
+        </button>
+
+    </div>
+
+    <script src="popup.js"></script>
+
+</body>
+
+</html>

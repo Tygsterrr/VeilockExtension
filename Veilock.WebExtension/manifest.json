@@ -1,0 +1,31 @@
+{
+    "manifest_version": 3,
+    "name": "Veilock",
+    "version": "0.1.0",
+    "description": "A browser extension designed to identify potentially unsafe credential-collection websites.",
+    
+    "permissions": [
+      "storage",
+      "tabs"
+    ],
+  
+    "host_permissions": [
+      "<all_urls>"
+    ],
+  
+    "action": {
+      "default_popup": "popup/popup.html"
+    },
+  
+    "background": {
+      "service_worker": "background/background.js"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content/content.js"],
+        "run_at": "document_idle"
+      }
+    ]
+  }
