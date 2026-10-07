@@ -4,43 +4,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Veilock</title>
+
     <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="app">
 
-        <h1>Veilock</h1>
+        <!-- ======================== -->
+        <!-- TOP NAVIGATION BAR -->
+        <!-- ======================== -->
 
-        <p class="subtitle">
-            Website Security
-        </p>
+        <header class="topbar">
 
-        <div class="website-section">
-            <h2>Current Website</h2>
-            <p id="currentWebsite">Loading...</p>
-        </div>
+            <div class="logo">
 
-        <div class="status-section">
-            <h2>Status</h2>
+                <img
+                    src="../assets/logo.svg"
+                    alt="Veilock Logo"
+                    class="logo-image"
+                >
 
-            <div class="status">
-                <span class="status-dot"></span>
-                <span id="statusText">Not Analyzed</span>
+                <span>Veilock</span>
+
             </div>
-        </div>
 
-        <button id="analyzeButton">
-            Analyze Website
-        </button>
+            <nav class="navigation">
 
-        <button id="settingsButton" class="secondary">
-            Settings
-        </button>
+                <button
+                    class="nav-button active"
+                    data-page="internetPage"
+                >
+                    Internet
+                </button>
+
+                <button
+                    class="nav-button"
+                    data-page="adblockPage"
+                >
+                    AD
+                </button>
+
+                <button
+                    class="nav-button"
+                    data-page="passwordPage"
+                >
+                    Passwd
+                </button>
+
+            </nav>
+
+        </header>
+
+
+        <!-- ======================== -->
+        <!-- INTERNET PAGE -->
+        <!-- ======================== -->
+
+        <main id="internetPage" class="page active">
+
+            <div class="page-header">
+
+                <div>
+
+                    <p class="section-label">
+                        WEBSITE PROTECTION
+                    </p>
+
+                    <h1>
+                        Website Analysis
+                    </h1>
+
+                </div>
+
+
+                <div
+                    id="statusText"
+                    class="status-badge neutral"
+                >
+                    NOT ANALYZED
+                </div>
+
+            </div>
+
+
+            <!-- CURRENT WEBSITE -->
+
+            <section class="card">
+
+                <p class="card-label">
+                    CURRENT WEBSITE
+                </p>
+
+                <p
+                    id="currentWebsite"
+                    class="website-url"
+                >
+                    Loading...
+                </p>
+
+                <p
+                    id="currentTitle"
+                    class="website-title"
+                >
+                    Waiting for page information...
+                </p>
+
+            </section>
+
+
+            <!-- URL ANALYSIS -->
+
+            <div class="analysis-row">
+
+                <section class="card destination-card">
+
+                    <p class="card-label">
+                        INTENDED WEBSITE
+                    </p>
+
+                    <p
+                        id="intendedWebsite"
+                        class="website-url muted"
+                    >
+                        Not detected yet
+                    </p>
+
+                </section>
+
+
+                <section class="score-card">
+
+                    <p class="card-label">
+                        SAFETY SCORE
+                    </p>
+
+                    <div class="score">
+
+                        <span id="scoreNumber">
+                            --
+                        </span>
+
+                        <span class="score-total">
+                            /100
+                        </span>
+
+                    </div>
+
+
+                    <div class="score-bar">
+
+                        <div
+                            id="scoreFill"
+                            class="score-fill"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- ANALYSIS RESULTS -->
+
+            <section class="card analysis-card">
+
+                <p class="card-label">
+                    VEILOCK ANALYSIS
+                </p>
+
+                <p id="analysisMessage">
+
+                    Click Analyze Website to begin
+                    checking the current page.
+
+                </p>
+
+            </section>
+
+
+            <button
+                id="analyzeButton"
+                class="primary-button"
+            >
+
+                Analyze Website
+
+            </button>
+
+        </main>
+
+
+
+        <!-- ======================== -->
+        <!-- AD BLOCKER PAGE -->
+        <!-- ======================== -->
+
+        <main id="adblockPage" class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <p class="section-label">
+                        BROWSING PROTECTION
+                    </p>
+
+                    <h1>
+                        Ad Blocker
+                    </h1>
+
+                </div>
+
+
+                <div
+                    id="adStatus"
+                    class="status-badge neutral"
+                >
+                    OFF
+                </div>
+
+            </div>
+
+
+            <section class="card ad-control">
+
+                <div>
+
+                    <p class="card-label">
+                        AD BLOCKING
+                    </p>
+
+                    <h2>
+                        Block unwanted ads
+                    </h2>
+
+                    <p class="description">
+
+                        Enable or disable Veilock's
+                        ad-blocking protection.
+
+                    </p>
+
+                </div>
+
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="adToggle"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </section>
+
+
+            <button
+                id="manageAdButton"
+                class="secondary-button"
+            >
+
+                Manage Ad Blocker
+
+            </button>
+
+        </main>
+
+
+
+        <!-- ======================== -->
+        <!-- PASSWORD PAGE -->
+        <!-- ======================== -->
+
+        <main id="passwordPage" class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <p class="section-label">
+                        CREDENTIAL PROTECTION
+                    </p>
+
+                    <h1>
+                        Password Manager
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <section class="card password-card">
+
+                <label for="passwordField">
+                    PASSWORD FOR THIS SITE
+                </label>
+
+
+                <div class="password-row">
+
+                    <input
+                        type="text"
+                        id="passwordField"
+                        placeholder="Generate a secure password"
+                    >
+
+
+                    <button
+                        id="generateButton"
+                        class="small-button"
+                    >
+                        Generate
+                    </button>
+
+
+                    <button
+                        id="copyButton"
+                        class="small-button"
+                    >
+                        Copy
+                    </button>
+
+                </div>
+
+
+                <label for="usernameField">
+                    USERNAME
+                </label>
+
+
+                <input
+                    type="text"
+                    id="usernameField"
+                    placeholder="Username for this site"
+                >
+
+
+                <div class="password-strength">
+
+                    <span>
+                        Password Strength
+                    </span>
+
+                    <strong id="strengthText">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="password-buttons">
+
+                    <button
+                        id="savePasswordButton"
+                        class="primary-button"
+                    >
+                        Save
+                    </button>
+
+
+                    <button
+                        id="managePasswordsButton"
+                        class="secondary-button"
+                    >
+                        Manage
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ======================== -->
+        <!-- FOOTER -->
+        <!-- ======================== -->
+
+        <footer>
+
+            <span>
+                Veilock
+            </span>
+
+            <span>
+                Prototype v0.2
+            </span>
+
+        </footer>
 
     </div>
+
 
     <script src="popup.js"></script>
 

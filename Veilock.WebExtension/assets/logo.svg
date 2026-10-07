@@ -1,0 +1,72 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    role="img"
+    aria-labelledby="veilockLogoTitle"
+>
+
+    <title id="veilockLogoTitle">
+        Veilock Security Logo
+    </title>
+
+    <!-- Shield -->
+    <path
+        d="
+            M50 6
+            L87 19
+            V43
+            C87 67 73 84 50 94
+            C27 84 13 67 13 43
+            V19
+            Z
+        "
+        fill="#151515"
+        stroke="#61d6c5"
+        stroke-width="6"
+        stroke-linejoin="round"
+    />
+
+    <!-- Lock body -->
+    <rect
+        x="32"
+        y="44"
+        width="36"
+        height="29"
+        rx="6"
+        fill="#61d6c5"
+    />
+
+    <!-- Lock shackle -->
+    <path
+        d="
+            M39 44
+            V35
+            C39 28 44 23 50 23
+            C56 23 61 28 61 35
+            V44
+        "
+        fill="none"
+        stroke="#61d6c5"
+        stroke-width="7"
+        stroke-linecap="round"
+    />
+
+    <!-- Keyhole -->
+    <circle
+        cx="50"
+        cy="56"
+        r="4"
+        fill="#151515"
+    />
+
+    <!-- Keyhole stem -->
+    <rect
+        x="48"
+        y="58"
+        width="4"
+        height="8"
+        rx="2"
+        fill="#151515"
+    />
+
+</svg>
