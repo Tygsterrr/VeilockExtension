@@ -92,63 +92,61 @@ chrome.tabs.query(
         // displays active tab's URL
         websiteElement.textContent =
             currentTab.url;
+            // ==================================================
+            // BACKGROUND COMMUNICATION
+            // ==================================================
+
+            // sends a request for the information background
+            // has stored about page -TS
+            chrome.runtime.sendMessage(
+                {
+                    type: "GET_PAGE_INFO",
+
+                    tabId: currentTab.id // specifies which browser tab for the information
+                },
+
+                (response) => {
+
+                    // displays response in DevTools console
+                    console.log(
+                        "Page info received from background:",
+                        response
+                    );
+
+
+                    /*
+                    * The background service begins with
+                    * currentPageInfo = null.
+                    *
+                    * Because of that, make sure a response
+                    * actually exists before using it.
+                    */
+
+                    if (response) {
+
+                        // use URL received from content.js
+                        websiteElement.textContent =
+                            response.url;
+
+
+                        // use page title received from content.js
+                        titleElement.textContent =
+                            response.title;
+
+                    }
+
+                    else {
+
+                        titleElement.textContent =
+                            "No page information received yet.";
+
+                    }
+
+                }
+            );
 
     }
 );
-
-
-
-// ==================================================
-// BACKGROUND COMMUNICATION
-// ==================================================
-
-// sends a request for the information background
-// has stored about page -TS
-chrome.runtime.sendMessage(
-    {
-        type: "GET_PAGE_INFO"
-    },
-
-    (response) => {
-
-        // displays response in DevTools console
-        console.log(
-            "Page info received from background:",
-            response
-        );
-
-
-        /*
-         * The background service begins with
-         * currentPageInfo = null.
-         *
-         * Because of that, make sure a response
-         * actually exists before using it.
-         */
-
-        if (response) {
-
-            // use URL received from content.js
-            websiteElement.textContent =
-                response.url;
-
-
-            // use page title received from content.js
-            titleElement.textContent =
-                response.title;
-
-        }
-
-        else {
-
-            titleElement.textContent =
-                "No page information received yet.";
-
-        }
-
-    }
-);
-
 
 
 // ==================================================
