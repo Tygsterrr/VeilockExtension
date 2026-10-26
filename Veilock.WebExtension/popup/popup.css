@@ -1,612 +1,738 @@
-/* ============================= */
+
+/* ================================================== */
+/* VEILOCK POPUP CSS */
+/* ================================================== */
+
+/* ================================================== */
+/* THEME VARIABLES */
+/* ================================================== */
+
+:root {
+    --accent: #61d6c5;
+}
+
+body[data-theme="light"] {
+    --background: #f4f5f7;
+    --surface: #ffffff;
+    --surface-secondary: #fafafa;
+    --text: #171a1f;
+    --text-secondary: #646b74;
+    --text-muted: #818892;
+    --border: #dfe3e8;
+    --input-bg: #fafafa;
+    --score-track: #e4e7ea;
+    --button-bg: #171a1f;
+    --button-text: #ffffff;
+    --button-hover: #292e35;
+}
+
+body[data-theme="dark"] {
+    --background: #121619;
+    --surface: #1d2429;
+    --surface-secondary: #283138;
+    --text: #f5f7f8;
+    --text-secondary: #b0bbc2;
+    --text-muted: #96a5ae;
+    --border: #354047;
+    --input-bg: #283138;
+    --score-track: #354047;
+    --button-bg: #61d6c5;
+    --button-text: #102724;
+    --button-hover: #4fc4b2;
+}
+
+/* ================================================== */
 /* GLOBAL */
-/* ============================= */
+/* ================================================== */
 
 * {
     box-sizing: border-box;
 }
 
+html {
+    width: 400px;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     width: 400px;
     min-height: 540px;
-
     margin: 0;
-
+    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-
-    background: #f4f5f7;
-
-    color: #171a1f;
+    font-size: 13px;
+    background: var(--background);
+    color: var(--text);
 }
-
 
 button,
-input {
+input,
+select {
     font: inherit;
 }
-
 
 button {
     cursor: pointer;
 }
 
-
-/* ============================= */
-/* TOP BAR */
-/* ============================= */
-
-.topbar {
-    height: 70px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    background: #151515;
-
-    color: white;
-
-    padding-left: 18px;
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
 }
 
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ================================================== */
+/* MAIN APPLICATION */
+/* ================================================== */
+
+.app {
+    width: 400px;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================================================== */
+/* TOP NAVIGATION BAR */
+/* ================================================== */
+
+.topbar {
+    width: 100%;
+    min-height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #151515;
+    color: #ffffff;
+    padding-left: 12px;
+    flex-shrink: 0;
+}
 
 .logo {
     display: flex;
-
     align-items: center;
-
-    gap: 8px;
-
-    font-size: 25px;
-
+    gap: 6px;
+    font-size: 20px;
     font-weight: 700;
-
     letter-spacing: -1px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
-
 
 .logo-image {
-    width: 34px;
-
-    height: 34px;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
 }
 
+/* ================================================== */
+/* NAVIGATION BUTTONS */
+/* ================================================== */
 
 .navigation {
-    height: 100%;
-
     display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 70px;
+    margin-left: auto;
 }
-
 
 .nav-button {
-    height: 100%;
-
-    padding: 0 12px;
-
+    height: 70px;
+    padding: 0 9px;
     border: none;
-
     border-bottom: 3px solid transparent;
-
     background: transparent;
-
     color: #a7a7a7;
-
-    font-size: 12px;
-
+    font-size: 11px;
     font-weight: bold;
+    white-space: nowrap;
 }
-
 
 .nav-button:hover {
-    color: white;
+    color: #ffffff;
 }
-
 
 .nav-button.active {
-    color: white;
-
-    border-bottom-color: #61d6c5;
-
+    color: #ffffff;
     background: #222222;
+    border-bottom-color: var(--accent);
 }
 
+/* ================================================== */
+/* SETTINGS BUTTON */
+/* ================================================== */
 
-/* ============================= */
-/* PAGES */
-/* ============================= */
+.settings-button {
+    width: 38px;
+    height: 70px;
+    padding: 0;
+    border: none;
+    border-left: 1px solid #303030;
+    background: transparent;
+    color: #ffffff;
+    font-size: 22px;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.settings-button:hover {
+    background: #222222;
+    color: var(--accent);
+}
+
+/* ================================================== */
+/* PAGE VISIBILITY AND LAYOUT */
+/* ================================================== */
+
+/*
+ * IMPORTANT:
+ * All pages are hidden by default.
+ * Only the page with the active class is visible.
+ */
 
 .page {
     display: none;
-
+    width: 100%;
+    min-width: 0;
     padding: 20px;
 }
-
 
 .page.active {
     display: block;
 }
 
+/*
+ * INTERNET PAGE FIX
+ *
+ * The Internet page must stack its children vertically.
+ * This prevents all cards from appearing in one row.
+ */
 
-/* ============================= */
+main#internetPage.page.active {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+}
+
+#internetPage > * {
+    width: 100%;
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+/* ================================================== */
 /* PAGE HEADER */
-/* ============================= */
+/* ================================================== */
 
 .page-header {
     display: flex;
-
+    flex-direction: row;
     justify-content: space-between;
-
     align-items: flex-start;
-
+    gap: 10px;
+    width: 100%;
     margin-bottom: 15px;
 }
 
+#internetPage .page-header {
+    margin-bottom: 0;
+}
+
+#internetPage .page-header > div:first-child {
+    flex: 1;
+    min-width: 0;
+}
 
 .section-label {
     margin: 0 0 4px;
-
+    color: var(--text-muted);
     font-size: 9px;
-
     font-weight: bold;
-
     letter-spacing: 1px;
-
-    color: #858b94;
 }
-
 
 h1 {
     margin: 0;
-
     font-size: 24px;
+    line-height: 1.15;
 }
 
+#internetPage h1 {
+    font-size: 22px;
+}
 
 h2 {
     margin: 5px 0;
-
     font-size: 17px;
 }
 
+/* ================================================== */
+/* HEADER STATUS AND MODE BADGES */
+/* ================================================== */
 
-/* ============================= */
+.header-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.mode-badge {
+    padding: 5px 9px;
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    font-size: 9px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 15px;
+    font-size: 9px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.status-badge.neutral {
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.status-badge.safe {
+    background: #dcf5ec;
+    color: #14715a;
+}
+
+.status-badge.warning {
+    background: #fff0cf;
+    color: #8c6000;
+}
+
+.status-badge.danger {
+    background: #ffdddd;
+    color: #9e2525;
+}
+
+/* ================================================== */
 /* CARDS */
-/* ============================= */
+/* ================================================== */
 
 .card,
 .score-card {
-    background: white;
-
-    border: 1px solid #dfe3e8;
-
-    border-radius: 10px;
-
+    display: block;
+    width: 100%;
+    min-width: 0;
     padding: 15px;
-
-    box-shadow:
-        0 2px 7px rgba(0, 0, 0, 0.04);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
 }
-
 
 .card-label {
     margin: 0 0 8px;
-
+    color: var(--text-muted);
     font-size: 9px;
-
     font-weight: bold;
-
     letter-spacing: 0.8px;
-
-    color: #818892;
 }
 
-
-/* ============================= */
-/* WEBSITE INFO */
-/* ============================= */
+/* ================================================== */
+/* CURRENT WEBSITE */
+/* ================================================== */
 
 .website-url {
     margin: 0;
-
+    color: var(--text);
     font-size: 13px;
-
     font-weight: bold;
-
-    word-break: break-all;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
-
 
 .website-title {
     margin: 7px 0 0;
-
-    color: #7b828c;
-
+    color: var(--text-secondary);
     font-size: 11px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
-
 .muted {
-    color: #9da3ab;
-
+    color: var(--text-muted);
     font-weight: normal;
 }
 
-
-/* ============================= */
-/* ANALYSIS */
-/* ============================= */
+/* ================================================== */
+/* INTENDED WEBSITE AND SAFETY SCORE */
+/* ================================================== */
 
 .analysis-row {
     display: grid;
-
-    grid-template-columns: 1fr 120px;
-
+    grid-template-columns: minmax(0, 1fr) 120px;
     gap: 10px;
-
-    margin-top: 10px;
+    width: 100%;
+    margin: 0;
 }
 
+.analysis-row > * {
+    min-width: 0;
+}
+
+.destination-card {
+    width: 100%;
+}
 
 .score-card {
+    width: 100%;
     text-align: center;
 }
-
 
 .score {
     margin: 5px 0 10px;
 }
 
-
 #scoreNumber {
     font-size: 30px;
-
     font-weight: bold;
 }
 
-
 .score-total {
+    color: var(--text-muted);
     font-size: 10px;
-
-    color: #8a9098;
 }
-
 
 .score-bar {
     width: 100%;
-
     height: 6px;
-
-    background: #e4e7ea;
-
+    background: var(--score-track);
     border-radius: 5px;
-
     overflow: hidden;
 }
 
-
 .score-fill {
-    width: 0;
-
+    width: 0%;
     height: 100%;
-
-    background: #61d6c5;
-
-    transition: width 0.3s;
+    background: var(--accent);
+    transition: width 0.3s ease;
 }
 
+/* ================================================== */
+/* VEILOCK ANALYSIS CARD */
+/* ================================================== */
 
 .analysis-card {
-    margin-top: 10px;
+    width: 100%;
+    margin: 0;
 }
-
 
 .analysis-card p:last-child {
     margin-bottom: 0;
-
-    color: #646b74;
-
+    color: var(--text-secondary);
     font-size: 12px;
-
     line-height: 1.5;
 }
 
+/* ================================================== */
+/* ADVANCED MODE */
+/* ================================================== */
 
-/* ============================= */
-/* STATUS BADGES */
-/* ============================= */
-
-.status-badge {
-    padding: 6px 9px;
-
-    border-radius: 15px;
-
-    font-size: 9px;
-
-    font-weight: bold;
+.hidden {
+    display: none !important;
 }
 
-
-.status-badge.neutral {
-    background: #e8ebee;
-
-    color: #666d75;
+.advanced-only {
+    width: 100%;
+    margin: 0;
 }
 
-
-.status-badge.safe {
-    background: #dcf5ec;
-
-    color: #14715a;
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
 }
 
-
-.status-badge.warning {
-    background: #fff0cf;
-
-    color: #8c6000;
+.detail-row:last-of-type {
+    border-bottom: none;
 }
 
-
-.status-badge.danger {
-    background: #ffdddd;
-
-    color: #9e2525;
+.detail-row span {
+    color: var(--text-secondary);
 }
 
+.detail-row strong {
+    color: var(--text);
+    text-align: right;
+    overflow-wrap: anywhere;
+}
 
-/* ============================= */
+/* ================================================== */
+/* SECURITY EXPLANATION */
+/* ================================================== */
+
+.explanation-card {
+    width: 100%;
+    margin: 0;
+}
+
+.explanation-card .description {
+    margin-top: 8px;
+}
+
+/* ================================================== */
 /* MAIN BUTTONS */
-/* ============================= */
+/* ================================================== */
 
 .primary-button,
 .secondary-button {
+    display: block;
     width: 100%;
-
     padding: 11px;
-
     margin-top: 12px;
-
     border-radius: 7px;
-
     font-size: 12px;
-
     font-weight: bold;
+    text-align: center;
 }
-
 
 .primary-button {
     border: none;
-
-    background: #171a1f;
-
-    color: white;
+    background: var(--button-bg);
+    color: var(--button-text);
 }
 
-
-.primary-button:hover {
-    background: #292e35;
+.primary-button:hover:not(:disabled) {
+    background: var(--button-hover);
 }
-
 
 .secondary-button {
-    border: 1px solid #d6dade;
-
-    background: white;
-
-    color: #262a30;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
 }
 
-
-/* ============================= */
-/* AD BLOCKER */
-/* ============================= */
-
-.ad-control {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 20px;
+.secondary-button:hover:not(:disabled) {
+    border-color: var(--accent);
 }
 
+/* Analyze button stays below all analysis cards */
 
-.description {
-    margin: 0;
-
-    color: #6d737b;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
-
-/* SWITCH */
-
-.switch {
-    position: relative;
-
-    width: 48px;
-
-    height: 26px;
-
+#internetPage #analyzeButton {
+    display: block;
+    width: 100%;
+    margin-top: 0;
     flex-shrink: 0;
 }
 
+/* ================================================== */
+/* AD BLOCKER */
+/* ================================================== */
 
-.switch input {
-    display: none;
+.ad-control {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
 
+.description {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ================================================== */
+/* AD BLOCKER SWITCH */
+/* ================================================== */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
 
 .slider {
     position: absolute;
-
     inset: 0;
-
     background: #c8ccd1;
-
     border-radius: 30px;
-
-    transition: 0.2s;
+    transition: 0.2s ease;
+    pointer-events: none;
 }
-
 
 .slider::before {
     content: "";
-
     position: absolute;
-
-    width: 20px;
-
-    height: 20px;
-
     top: 3px;
-
     left: 3px;
-
-    background: white;
-
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
     border-radius: 50%;
-
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
-
 
 .switch input:checked + .slider {
-    background: #61d6c5;
+    background: var(--accent);
 }
-
 
 .switch input:checked + .slider::before {
     transform: translateX(22px);
 }
 
+.switch input:focus-visible + .slider {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
 
-/* ============================= */
+/* ================================================== */
 /* PASSWORD MANAGER */
-/* ============================= */
+/* ================================================== */
 
 .password-card {
     display: flex;
-
     flex-direction: column;
-
     gap: 9px;
 }
 
-
 .password-card label {
-    color: #818892;
-
+    color: var(--text-muted);
     font-size: 9px;
-
     font-weight: bold;
-
     letter-spacing: 0.7px;
 }
 
-
 .password-row {
     display: grid;
-
-    grid-template-columns: 1fr auto auto;
-
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 5px;
 }
 
-
 input[type="text"] {
     width: 100%;
-
     min-width: 0;
-
     padding: 10px;
-
-    border: 1px solid #dadee2;
-
+    border: 1px solid var(--border);
     border-radius: 6px;
-
-    background: #fafafa;
-
+    background: var(--input-bg);
+    color: var(--text);
     outline: none;
-
     font-size: 11px;
 }
 
-
 input[type="text"]:focus {
-    border-color: #61d6c5;
+    border-color: var(--accent);
 }
-
 
 .small-button {
     padding: 0 8px;
-
-    border: 1px solid #d6dade;
-
+    border: 1px solid var(--border);
     border-radius: 6px;
-
-    background: white;
-
+    background: var(--surface);
+    color: var(--text);
     font-size: 10px;
-
     font-weight: bold;
 }
 
+.small-button:hover {
+    border-color: var(--accent);
+}
+
+/* ================================================== */
+/* PASSWORD STRENGTH */
+/* ================================================== */
 
 .password-strength {
     display: flex;
-
     justify-content: space-between;
-
     margin-top: 3px;
-
-    color: #7d838c;
-
+    color: var(--text-secondary);
     font-size: 10px;
 }
 
-
 .password-strength strong {
-    color: #14715a;
+    color: #42b883;
 }
 
+/* ================================================== */
+/* PASSWORD BUTTONS */
+/* ================================================== */
 
 .password-buttons {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 8px;
 }
-
 
 .password-buttons button {
     margin-top: 5px;
 }
 
+/* ================================================== */
+/* ACCOUNT SECTION */
+/* ================================================== */
 
-/* ============================= */
+.account-card {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.account-card h2 {
+    margin-bottom: 10px;
+}
+
+.account-card .secondary-button {
+    margin-top: 15px;
+}
+
+/* ================================================== */
 /* FOOTER */
-/* ============================= */
+/* ================================================== */
 
 footer {
     display: flex;
-
     justify-content: space-between;
-
-    padding: 5px 20px 15px;
-
-    color: #9ca2aa;
-
+    width: 100%;
+    margin-top: auto;
+    padding: 12px 20px 15px;
+    color: var(--text-muted);
     font-size: 9px;
-
     font-weight: bold;
 }
+
+/* ================================================== */
+/* END OF STYLESHEET */
+/* ================================================== */

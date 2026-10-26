@@ -10,15 +10,17 @@
     <link rel="stylesheet" href="popup.css">
 </head>
 
-<body>
+<body data-theme="dark">
 
     <div class="app">
 
-        <!-- ======================== -->
+        <!-- ====================================== -->
         <!-- TOP NAVIGATION BAR -->
-        <!-- ======================== -->
+        <!-- ====================================== -->
 
         <header class="topbar">
+
+            <!-- VEILOCK LOGO -->
 
             <div class="logo">
 
@@ -32,11 +34,15 @@
 
             </div>
 
+
+            <!-- NAVIGATION TABS -->
+
             <nav class="navigation">
 
                 <button
                     class="nav-button active"
                     data-page="internetPage"
+                    type="button"
                 >
                     Internet
                 </button>
@@ -44,6 +50,7 @@
                 <button
                     class="nav-button"
                     data-page="adblockPage"
+                    type="button"
                 >
                     AD
                 </button>
@@ -51,20 +58,36 @@
                 <button
                     class="nav-button"
                     data-page="passwordPage"
+                    type="button"
                 >
                     Passwd
                 </button>
 
             </nav>
 
+
+            <!-- SETTINGS BUTTON -->
+
+            <button
+                id="settingsButton"
+                class="settings-button"
+                type="button"
+                title="Open Veilock Settings"
+                aria-label="Open Veilock Settings"
+            >
+                &#9881;
+            </button>
+
         </header>
 
 
-        <!-- ======================== -->
+        <!-- ====================================== -->
         <!-- INTERNET PAGE -->
-        <!-- ======================== -->
+        <!-- ====================================== -->
 
         <main id="internetPage" class="page active">
+
+            <!-- PAGE HEADER -->
 
             <div class="page-header">
 
@@ -81,17 +104,33 @@
                 </div>
 
 
-                <div
-                    id="statusText"
-                    class="status-badge neutral"
-                >
-                    NOT ANALYZED
+                <!-- SIMPLE / ADVANCED AND STATUS -->
+
+                <div class="header-badges">
+
+                    <span
+                        id="modeBadge"
+                        class="mode-badge"
+                    >
+                        Simple
+                    </span>
+
+                    <div
+                        id="statusText"
+                        class="status-badge neutral"
+                    >
+                        NOT ANALYZED
+                    </div>
+
                 </div>
 
             </div>
+            <!-- PAGE HEADER ENDS HERE -->
 
 
+            <!-- ================================== -->
             <!-- CURRENT WEBSITE -->
+            <!-- ================================== -->
 
             <section class="card">
 
@@ -116,9 +155,13 @@
             </section>
 
 
-            <!-- URL ANALYSIS -->
+            <!-- ================================== -->
+            <!-- INTENDED WEBSITE AND SAFETY SCORE -->
+            <!-- ================================== -->
 
             <div class="analysis-row">
+
+                <!-- INTENDED WEBSITE -->
 
                 <section class="card destination-card">
 
@@ -135,6 +178,8 @@
 
                 </section>
 
+
+                <!-- SAFETY SCORE -->
 
                 <section class="score-card">
 
@@ -154,7 +199,6 @@
 
                     </div>
 
-
                     <div class="score-bar">
 
                         <div
@@ -169,7 +213,9 @@
             </div>
 
 
-            <!-- ANALYSIS RESULTS -->
+            <!-- ================================== -->
+            <!-- VEILOCK ANALYSIS RESULTS -->
+            <!-- ================================== -->
 
             <section class="card analysis-card">
 
@@ -178,31 +224,156 @@
                 </p>
 
                 <p id="analysisMessage">
-
                     Click Analyze Website to begin
                     checking the current page.
-
                 </p>
 
             </section>
 
 
+            <!-- ================================== -->
+            <!-- ADVANCED TECHNICAL ANALYSIS -->
+            <!-- ================================== -->
+
+            <!--
+                Hidden in Simple Mode.
+
+                popup.js removes the hidden class
+                when Advanced Mode is selected.
+            -->
+
+            <section
+                id="advancedAnalysis"
+                class="card advanced-only hidden"
+            >
+
+                <p class="card-label">
+                    TECHNICAL ANALYSIS
+                </p>
+
+
+                <!-- CURRENT DOMAIN -->
+
+                <div class="detail-row">
+
+                    <span>
+                        Current Domain
+                    </span>
+
+                    <strong id="domainValue">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <!-- HTTPS STATUS -->
+
+                <div class="detail-row">
+
+                    <span>
+                        HTTPS Connection
+                    </span>
+
+                    <strong id="httpsValue">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <!-- PASSWORD FIELDS -->
+
+                <div class="detail-row">
+
+                    <span>
+                        Password Fields
+                    </span>
+
+                    <strong id="passwordFieldValue">
+                        Not checked
+                    </strong>
+
+                </div>
+
+
+                <!-- FORM DESTINATIONS -->
+
+                <div class="detail-row">
+
+                    <span>
+                        Form Destinations
+                    </span>
+
+                    <strong id="formDestinationValue">
+                        Not checked
+                    </strong>
+
+                </div>
+
+
+                <!-- THREAT DATABASE -->
+
+                <div class="detail-row">
+
+                    <span>
+                        Threat Database
+                    </span>
+
+                    <strong id="databaseValue">
+                        Not checked
+                    </strong>
+
+                </div>
+
+
+                <p class="description">
+                    Detailed detection results will appear
+                    here once website analysis is implemented.
+                </p>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- SECURITY EXPLANATION -->
+            <!-- ================================== -->
+
+            <section class="card explanation-card">
+
+                <p class="card-label">
+                    WHY WAS THIS FLAGGED?
+                </p>
+
+                <p
+                    id="explanationText"
+                    class="description"
+                >
+                    No analysis has been performed yet.
+                </p>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- ANALYZE WEBSITE BUTTON -->
+            <!-- ================================== -->
+
             <button
                 id="analyzeButton"
                 class="primary-button"
+                type="button"
             >
-
                 Analyze Website
-
             </button>
 
         </main>
+        <!-- INTERNET PAGE ENDS HERE -->
 
 
-
-        <!-- ======================== -->
+        <!-- ====================================== -->
         <!-- AD BLOCKER PAGE -->
-        <!-- ======================== -->
+        <!-- ====================================== -->
 
         <main id="adblockPage" class="page">
 
@@ -231,6 +402,8 @@
             </div>
 
 
+            <!-- AD BLOCKER CONTROL -->
+
             <section class="card ad-control">
 
                 <div>
@@ -244,20 +417,23 @@
                     </h2>
 
                     <p class="description">
-
                         Enable or disable Veilock's
-                        ad-blocking protection.
-
+                        ad-blocking preference.
+                        Actual ad blocking will be
+                        implemented in a future update.
                     </p>
 
                 </div>
 
+
+                <!-- TOGGLE SWITCH -->
 
                 <label class="switch">
 
                     <input
                         type="checkbox"
                         id="adToggle"
+                        aria-label="Enable ad blocking preference"
                     >
 
                     <span class="slider"></span>
@@ -267,22 +443,23 @@
             </section>
 
 
+            <!-- MANAGE AD BLOCKER -->
+
             <button
                 id="manageAdButton"
                 class="secondary-button"
+                type="button"
             >
-
                 Manage Ad Blocker
-
             </button>
 
         </main>
+        <!-- AD BLOCKER PAGE ENDS HERE -->
 
 
-
-        <!-- ======================== -->
-        <!-- PASSWORD PAGE -->
-        <!-- ======================== -->
+        <!-- ====================================== -->
+        <!-- PASSWORD MANAGER PAGE -->
+        <!-- ====================================== -->
 
         <main id="passwordPage" class="page">
 
@@ -303,6 +480,8 @@
             </div>
 
 
+            <!-- PASSWORD GENERATOR -->
+
             <section class="card password-card">
 
                 <label for="passwordField">
@@ -316,12 +495,15 @@
                         type="text"
                         id="passwordField"
                         placeholder="Generate a secure password"
+                        autocomplete="off"
+                        spellcheck="false"
                     >
 
 
                     <button
                         id="generateButton"
                         class="small-button"
+                        type="button"
                     >
                         Generate
                     </button>
@@ -330,6 +512,7 @@
                     <button
                         id="copyButton"
                         class="small-button"
+                        type="button"
                     >
                         Copy
                     </button>
@@ -337,17 +520,22 @@
                 </div>
 
 
+                <!-- USERNAME -->
+
                 <label for="usernameField">
                     USERNAME
                 </label>
-
 
                 <input
                     type="text"
                     id="usernameField"
                     placeholder="Username for this site"
+                    autocomplete="off"
+                    spellcheck="false"
                 >
 
+
+                <!-- PASSWORD STRENGTH -->
 
                 <div class="password-strength">
 
@@ -362,19 +550,27 @@
                 </div>
 
 
+                <!-- PASSWORD ACTIONS -->
+
                 <div class="password-buttons">
 
                     <button
                         id="savePasswordButton"
                         class="primary-button"
+                        type="button"
+                        disabled
+                        title="Encrypted password storage is not implemented yet"
                     >
-                        Save
+                        Save — Coming Soon
                     </button>
 
 
                     <button
                         id="managePasswordsButton"
                         class="secondary-button"
+                        type="button"
+                        disabled
+                        title="Password management is not implemented yet"
                     >
                         Manage
                     </button>
@@ -383,12 +579,47 @@
 
             </section>
 
+
+            <!-- ================================== -->
+            <!-- ACCOUNT SECTION -->
+            <!-- ================================== -->
+
+            <section class="card account-card">
+
+                <p class="card-label">
+                    VEILOCK ACCOUNT
+                </p>
+
+                <h2>
+                    Secure Password Storage
+                </h2>
+
+                <p class="description">
+                    Generate passwords for free without an account.
+                    Encrypted password storage and optional
+                    cross-device synchronization are planned
+                    for a future update.
+                </p>
+
+
+                <button
+                    id="loginButton"
+                    class="secondary-button"
+                    type="button"
+                    disabled
+                >
+                    Login / Create Account — Coming Soon
+                </button>
+
+            </section>
+
         </main>
+        <!-- PASSWORD PAGE ENDS HERE -->
 
 
-        <!-- ======================== -->
+        <!-- ====================================== -->
         <!-- FOOTER -->
-        <!-- ======================== -->
+        <!-- ====================================== -->
 
         <footer>
 
@@ -404,6 +635,10 @@
 
     </div>
 
+
+    <!-- ====================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ====================================== -->
 
     <script src="popup.js"></script>
 

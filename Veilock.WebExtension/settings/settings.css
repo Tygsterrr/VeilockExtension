@@ -1,0 +1,324 @@
+/* ============================= */
+/* VEILOCK THEME SYSTEM */
+/* ============================= */
+
+:root {
+    --accent: #61d6c5;
+}
+
+/* LIGHT MODE */
+
+body[data-theme="light"] {
+    --background: #f4f5f7;
+    --surface: #ffffff;
+    --surface-secondary: #fafafa;
+
+    --text: #171a1f;
+    --text-secondary: #646b74;
+    --text-muted: #818892;
+
+    --border: #dfe3e8;
+
+    --input-bg: #fafafa;
+}
+
+/* DARK MODE */
+
+body[data-theme="dark"] {
+    --background: #121619;
+    --surface: #1d2429;
+    --surface-secondary: #283138;
+
+    --text: #f5f7f8;
+    --text-secondary: #b0bbc2;
+    --text-muted: #96a5ae;
+
+    --border: #354047;
+
+    --input-bg: #283138;
+}
+
+
+/* ============================= */
+/* GLOBAL */
+/* ============================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+button,
+select {
+    font: inherit;
+}
+
+
+/* ============================= */
+/* SETTINGS HEADER */
+/* ============================= */
+
+.settings-header {
+    background: #151515;
+    color: #ffffff;
+
+    padding: 22px 30px;
+
+    border-bottom: 3px solid var(--accent);
+}
+
+.header-content {
+    max-width: 850px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    letter-spacing: -1px;
+}
+
+.logo-image {
+    width: 34px;
+    height: 34px;
+}
+
+.settings-header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+
+/* ============================= */
+/* SETTINGS CONTAINER */
+/* ============================= */
+
+.settings-container {
+    max-width: 850px;
+
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+
+/* ============================= */
+/* SETTINGS CARDS */
+/* ============================= */
+
+.settings-card {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    padding: 25px;
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.04);
+}
+
+.section-label {
+    margin: 0 0 7px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.settings-card h2 {
+    margin: 0 0 12px;
+
+    font-size: 20px;
+}
+
+.settings-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 15px;
+}
+
+.description {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.account-description {
+    margin-top: 12px;
+}
+
+
+/* ============================= */
+/* SETTINGS ROWS */
+/* ============================= */
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    padding-top: 20px;
+}
+
+.setting-row > div {
+    flex: 1;
+}
+
+
+/* ============================= */
+/* SELECT DROPDOWNS */
+/* ============================= */
+
+select {
+    min-width: 190px;
+
+    padding: 11px;
+
+    background: var(--input-bg);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* ============================= */
+/* BUTTONS */
+/* ============================= */
+
+.account-button,
+.reset-button {
+    padding: 11px 17px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.account-button {
+    margin-top: 18px;
+
+    border: none;
+
+    background: var(--accent);
+    color: #102724;
+}
+
+.account-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.reset-button {
+    margin-top: 18px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.reset-button:hover {
+    border-color: var(--accent);
+}
+
+
+/* ============================= */
+/* SAVE CONFIRMATION */
+/* ============================= */
+
+.save-message {
+    min-height: 20px;
+
+    margin-bottom: 30px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    .settings-header {
+        padding: 20px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .settings-header h1 {
+        font-size: 18px;
+    }
+
+    .setting-row {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 12px;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .settings-card {
+        padding: 18px;
+    }
+
+}

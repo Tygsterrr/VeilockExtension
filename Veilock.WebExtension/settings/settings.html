@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Veilock Settings</title>
+
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body data-theme="dark">
+
+    <!-- ============================= -->
+    <!-- SETTINGS HEADER -->
+    <!-- ============================= -->
+
+    <header class="settings-header">
+
+        <div class="header-content">
+
+            <div class="logo">
+
+                <img
+                    src="../assets/logo.svg"
+                    alt="Veilock Logo"
+                    class="logo-image"
+                >
+
+                <span>Veilock</span>
+
+            </div>
+
+            <h1>Settings</h1>
+
+        </div>
+
+    </header>
+
+
+    <!-- ============================= -->
+    <!-- SETTINGS CONTENT -->
+    <!-- ============================= -->
+
+    <main class="settings-container">
+
+        <!-- APPEARANCE -->
+
+        <section class="settings-card">
+
+            <p class="section-label">
+                APPEARANCE
+            </p>
+
+            <h2>Theme</h2>
+
+            <p class="description">
+                Customize how Veilock looks.
+            </p>
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>Color Theme</h3>
+
+                    <p class="description">
+                        Choose between dark and light mode.
+                    </p>
+                </div>
+
+                <select id="themeSelect">
+
+                    <option value="dark">
+                        Dark Mode
+                    </option>
+
+                    <option value="light">
+                        Light Mode
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- DISPLAY MODE -->
+
+        <section class="settings-card">
+
+            <p class="section-label">
+                USER EXPERIENCE
+            </p>
+
+            <h2>Display Mode</h2>
+
+            <p class="description">
+                Choose how much security information
+                Veilock displays.
+            </p>
+
+            <div class="setting-row">
+
+                <div>
+
+                    <h3>Interface Complexity</h3>
+
+                    <p class="description">
+                        Simple Mode displays basic security
+                        information and explanations.
+                        Advanced Mode includes additional
+                        technical details.
+                    </p>
+
+                </div>
+
+                <select id="displayModeSelect">
+
+                    <option value="simple">
+                        Simple Mode
+                    </option>
+
+                    <option value="advanced">
+                        Advanced Mode
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECURITY PREFERENCES -->
+
+        <section class="settings-card">
+
+            <p class="section-label">
+                WEBSITE PROTECTION
+            </p>
+
+            <h2>Security Preferences</h2>
+
+            <p class="description">
+                These settings will become available
+                when the website analysis engine
+                is implemented.
+            </p>
+
+            <div class="setting-row">
+
+                <div>
+
+                    <h3>Detection Sensitivity</h3>
+
+                    <p class="description">
+                        Control how aggressively Veilock
+                        identifies suspicious websites.
+                    </p>
+
+                </div>
+
+                <select
+                    id="sensitivitySelect"
+                    disabled
+                >
+
+                    <option value="balanced">
+                        Balanced — Coming Soon
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACCOUNT -->
+
+        <section class="settings-card">
+
+            <p class="section-label">
+                ACCOUNT
+            </p>
+
+            <h2>Veilock Account</h2>
+
+            <p class="description">
+                Website analysis, password generation,
+                and other basic security features
+                will be available without an account.
+            </p>
+
+            <p class="description account-description">
+                Optional accounts may eventually support
+                encrypted password synchronization
+                and additional cross-device features.
+            </p>
+
+            <button
+                class="account-button"
+                type="button"
+                disabled
+            >
+                Login / Create Account — Coming Soon
+            </button>
+
+        </section>
+
+
+        <!-- RESET PREFERENCES -->
+
+        <section class="settings-card">
+
+            <p class="section-label">
+                PREFERENCES
+            </p>
+
+            <h2>Reset Settings</h2>
+
+            <p class="description">
+                Restore Veilock's default appearance
+                and display settings.
+            </p>
+
+            <button
+                id="resetSettings"
+                class="reset-button"
+                type="button"
+            >
+                Restore Defaults
+            </button>
+
+        </section>
+
+
+        <!-- SAVE CONFIRMATION -->
+
+        <p
+            id="saveMessage"
+            class="save-message"
+            role="status"
+            aria-live="polite"
+        ></p>
+
+    </main>
+
+    <script src="settings.js"></script>
+
+</body>
+</html>
