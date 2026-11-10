@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+
+    "condition":  {
+
+      "requestDomains": [
+        "doubleclick.net"
+      ],
+
+      "resourceTypes": [
+        "script",
+        "image",
+        "sub_frame",
+        "xmlhttprequest"
+      ]
+    }
+
+  }
+]

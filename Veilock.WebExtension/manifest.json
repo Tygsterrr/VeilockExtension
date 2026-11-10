@@ -6,8 +6,19 @@
     
     "permissions": [
       "storage",
-      "tabs"
+      "tabs",
+      "declarativeNetRequest"
     ],
+
+    "declarative_net_request":  {
+      "rule_resources": [
+        {
+          "id": "veilock_ad_rules",
+          "enabled": false,
+          "path": "rules/adBlockRules.json"
+        }
+      ]
+    },
   
     "host_permissions": [
       "<all_urls>"

@@ -484,31 +484,46 @@ function setupWebsiteAnalysis() {
 
 function setupAdBlocker() {
 
+    // sets the toggle based on user saved preferences
     adToggle.checked =
         Boolean(currentSettings.adBlockEnabled);
 
-    updateAdStatus();
+    updateAdStatus(); // updates the visual status of the Ad Blocker
 
-    adToggle.addEventListener("change", async () => {
+    adToggle.addEventListener("change", async () => { // runs when the user enables/disables Ad Blocker
 
-        currentSettings.adBlockEnabled =
-            adToggle.checked;
+        const enabled = adToggle.checked; // gets the new toggle state
 
         try {
 
-            await chrome.storage.local.set({
-                adBlockEnabled: adToggle.checked
+            // enables/disables Chrome's registered ad-blocking ruleset
+            await chrome.declarativeNetRequest.updateEnabledRulesets({
+                enableRulesetIds: enabled ? ["veilock_ad_rules"] : [],
+                disableRulesetIds: enabled ? [] : ["veilock_ad_rules"]
             });
 
+            // saves the new preference after the ruleset update succeeds
+            await chrome.storage.local.set({
+                adBlockEnabled: enabled
+            });
+
+            // updates the current settings used by the popup
+            currentSettings.adBlockEnabled = enabled;
+
+            // refreshes the Ad Blocker's visual status
             updateAdStatus();
 
         } catch (error) {
 
+            // logs any errors while updating the rules or preferences
             console.error(
                 "Unable to save ad blocker preference:",
                 error
             );
 
+            // restores the toggle to its previous state if an error occurs
+            adToggle.checked = Boolean(currentSettings.adBlockEnabled);
+            updateAdStatus();
         }
 
     });
