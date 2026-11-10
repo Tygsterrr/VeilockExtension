@@ -385,9 +385,9 @@ async function loadCurrentWebsite() {
                 // Verify the background response belongs
                 // to the currently active website.
                 //
-                // The original background.js stores one
-                // currentPageInfo object, so without this
-                // check it could return another tab's data.
+                // The background.js stores page information
+                // separately for each tab. This additional
+                // check prevents stale page information.
 
                 if (response.url !== currentTab.url) {
                     return;
@@ -428,50 +428,466 @@ async function loadCurrentWebsite() {
 // WEBSITE ANALYSIS
 // ==================================================
 
+// Phase 1: Local credential-threat detection.
+// No password values are collected or transmitted.
+// Risk scores are experimental, not safety guarantees.
+
 function setupWebsiteAnalysis() {
 
     const analyzeButton =
         document.getElementById("analyzeButton");
 
-    analyzeButton.addEventListener("click", () => {
+    const intendedWebsite =
+        document.getElementById("intendedWebsite");
 
-        /*
-         * The real credential-theft detection engine
-         * has not been implemented yet.
-         *
-         * Do not display a fake safety score or
-         * incorrectly label a website as safe.
-         */
+    const passwordFieldValue =
+        document.getElementById("passwordFieldValue");
+
+    const formDestinationValue =
+        document.getElementById("formDestinationValue");
+
+    const databaseValue =
+        document.getElementById("databaseValue");
+
+    if (!analyzeButton) {
+        return;
+    }
+
+    analyzeButton.addEventListener("click", async () => {
+
+        // Prevent duplicate scans.
+        analyzeButton.disabled = true;
+
+        analyzeButton.textContent =
+            "Analyzing...";
+
+        // ==================================================
+        // RESET PREVIOUS ANALYSIS
+        // ==================================================
 
         scoreElement.textContent = "--";
 
         scoreFill.style.width = "0%";
 
         statusElement.textContent =
-            "NOT ANALYZED";
+            "ANALYZING";
 
         statusElement.className =
             "status-badge neutral";
 
         analysisMessage.textContent =
-            "Veilock's credential-theft detection engine " +
-            "is not implemented yet. No security verdict " +
-            "is available for this website.";
+            "Inspecting the current website...";
 
         if (explanationText) {
 
             explanationText.textContent =
-                "No security indicators have been evaluated. " +
-                "Future analysis will examine suspicious URLs, " +
-                "domain similarity, credential forms, and " +
-                "threat intelligence results.";
+                "Checking URL and credential-form indicators.";
 
         }
 
-        console.log(
-            "Veilock analysis requested. " +
-            "Detection engine not implemented."
-        );
+        if (passwordFieldValue) {
+
+            passwordFieldValue.textContent =
+                "Not checked";
+
+        }
+
+        if (formDestinationValue) {
+
+            formDestinationValue.textContent =
+                "Not checked";
+
+        }
+
+        if (databaseValue) {
+
+            databaseValue.textContent =
+                "Not checked";
+
+        }
+
+        if (intendedWebsite) {
+
+            intendedWebsite.textContent =
+                "Not determined";
+
+        }
+
+        try {
+
+            // ==================================================
+            // IDENTIFY THE ACTIVE TAB
+            // ==================================================
+
+            const tabs = await chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            });
+
+            if (tabs.length === 0) {
+
+                throw new Error(
+                    "No active website was found."
+                );
+
+            }
+
+            const currentTab = tabs[0];
+
+            if (
+                currentTab.id === undefined ||
+                !currentTab.url
+            ) {
+
+                throw new Error(
+                    "The active website URL is unavailable."
+                );
+
+            }
+
+            const parsedURL =
+                new URL(currentTab.url);
+
+            if (
+                parsedURL.protocol !== "http:" &&
+                parsedURL.protocol !== "https:"
+            ) {
+
+                throw new Error(
+                    "Veilock cannot analyze this type of browser page."
+                );
+
+            }
+
+
+            // ==================================================
+            // REQUEST CREDENTIAL FORM INFORMATION
+            // ==================================================
+
+            // Content script performs inspection inside
+            // the current website's main document.
+            //
+            // If unavailable, the detector can still
+            // perform URL-only checks.
+
+            let pageData = null;
+
+            try {
+
+                const response =
+                    await chrome.tabs.sendMessage(
+                        currentTab.id,
+                        {
+                            type: "VEILOCK_SCAN"
+                        },
+                        {
+                            frameId: 0
+                        }
+                    );
+
+                // Reject information from another page.
+                if (
+                    response &&
+                    response.url === currentTab.url
+                ) {
+
+                    pageData = response;
+
+                } else {
+
+                    console.warn(
+                        "Veilock received mismatched or missing scan data."
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "Veilock could not inspect credential forms:",
+                    error
+                );
+
+            }
+
+
+            // ==================================================
+            // VERIFY THE WEBSITE HAS NOT CHANGED
+            // ==================================================
+
+            const latestTabs =
+                await chrome.tabs.query({
+                    active: true,
+                    currentWindow: true
+                });
+
+            const latestTab = latestTabs[0];
+
+            if (
+                !latestTab ||
+                latestTab.id !== currentTab.id ||
+                latestTab.url !== currentTab.url
+            ) {
+
+                throw new Error(
+                    "The active website changed during analysis. Please scan again."
+                );
+
+            }
+
+
+            // ==================================================
+            // RUN THE DETECTION ENGINE
+            // ==================================================
+
+            if (
+                typeof VeilockDetector === "undefined"
+            ) {
+
+                throw new Error(
+                    "Veilock's detection engine could not be loaded."
+                );
+
+            }
+
+            const result =
+                VeilockDetector.analyze(
+                    currentTab.url,
+                    pageData
+                );
+
+            if (!result.supported) {
+
+                throw new Error(
+                    result.message ||
+                    "Website analysis is unsupported."
+                );
+
+            }
+
+
+            // ==================================================
+            // DISPLAY THE RISK SCORE
+            // ==================================================
+
+            scoreElement.textContent =
+                String(result.risk);
+
+            scoreFill.style.width =
+                result.risk + "%";
+
+            if (result.level === "HIGH") {
+
+                statusElement.textContent =
+                    "HIGH RISK";
+
+                statusElement.className =
+                    "status-badge danger";
+
+                scoreFill.style.background =
+                    "#e35d5d";
+
+            } else if (
+                result.level === "ELEVATED"
+            ) {
+
+                statusElement.textContent =
+                    "REVIEW";
+
+                statusElement.className =
+                    "status-badge warning";
+
+                scoreFill.style.background =
+                    "#e5b34e";
+
+            } else {
+
+                statusElement.textContent =
+                    "LOW INDICATED RISK";
+
+                statusElement.className =
+                    "status-badge neutral";
+
+                scoreFill.style.background =
+                    "#61d6c5";
+
+            }
+
+
+            // ==================================================
+            // REPORT INCOMPLETE SCAN COVERAGE
+            // ==================================================
+
+            // Do not present a URL-only scan as a
+            // complete credential-form inspection.
+
+            if (!result.inspected) {
+
+                if (result.level === "LOW") {
+
+                    statusElement.textContent =
+                        "PARTIAL SCAN";
+
+                } else if (
+                    result.level === "ELEVATED"
+                ) {
+
+                    statusElement.textContent =
+                        "REVIEW - PARTIAL";
+
+                } else {
+
+                    statusElement.textContent =
+                        "HIGH RISK - PARTIAL";
+
+                }
+
+            }
+
+            const coverageMessage =
+                result.inspected
+                    ? "URL and main-document password-form checks completed."
+                    : "Only URL checks completed. Password forms were not inspected.";
+
+            analysisMessage.textContent =
+                "Preliminary risk score: " +
+                result.risk +
+                "/100. " +
+                coverageMessage +
+                " This is not a guarantee of website safety.";
+
+
+            // ==================================================
+            // EXPLAIN DETECTED INDICATORS
+            // ==================================================
+
+            if (explanationText) {
+
+                if (result.findings.length > 0) {
+
+                    explanationText.textContent =
+                        result.findings
+                            .map((finding) => {
+                                return "• " + finding.message;
+                            })
+                            .join("\n");
+
+                } else {
+
+                    explanationText.textContent =
+                        "No warning indicators were identified " +
+                        "by the completed checks. This does " +
+                        "not confirm that the website is safe.";
+
+                }
+
+                explanationText.style.whiteSpace =
+                    "pre-line";
+
+            }
+
+
+            // ==================================================
+            // UPDATE ADVANCED ANALYSIS DETAILS
+            // ==================================================
+
+            if (passwordFieldValue) {
+
+                passwordFieldValue.textContent =
+                    result.inspected
+                        ? String(result.passwordFields)
+                        : "Not inspected";
+
+            }
+
+            if (formDestinationValue) {
+
+                if (!result.inspected) {
+
+                    formDestinationValue.textContent =
+                        "Not inspected";
+
+                } else if (
+                    result.formDestinations.length > 0
+                ) {
+
+                    formDestinationValue.textContent =
+                        result.formDestinations.join(", ");
+
+                } else {
+
+                    formDestinationValue.textContent =
+                        "No password-form destinations found";
+
+                }
+
+            }
+
+            if (databaseValue) {
+
+                databaseValue.textContent =
+                    result.threatDatabase;
+
+            }
+
+            // Intended brand detection is a future feature.
+            // Do not guess the user's intended website.
+
+            if (intendedWebsite) {
+
+                intendedWebsite.textContent =
+                    "Not determined";
+
+            }
+
+            console.log(
+                "Veilock credential-threat scan result:",
+                result
+            );
+
+        } catch (error) {
+
+            // ==================================================
+            // HANDLE ANALYSIS ERRORS
+            // ==================================================
+
+            scoreElement.textContent =
+                "--";
+
+            scoreFill.style.width =
+                "0%";
+
+            statusElement.textContent =
+                "SCAN UNAVAILABLE";
+
+            statusElement.className =
+                "status-badge neutral";
+
+            analysisMessage.textContent =
+                error.message ||
+                "Unable to analyze the current website.";
+
+            if (explanationText) {
+
+                explanationText.textContent =
+                    "No security verdict is available.";
+
+            }
+
+            console.error(
+                "Veilock analysis failed:",
+                error
+            );
+
+        } finally {
+
+            analyzeButton.disabled =
+                false;
+
+            analyzeButton.textContent =
+                "Analyze Website";
+
+        }
 
     });
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -156,7 +157,7 @@
 
 
             <!-- ================================== -->
-            <!-- INTENDED WEBSITE AND SAFETY SCORE -->
+            <!-- INTENDED WEBSITE AND RISK SCORE -->
             <!-- ================================== -->
 
             <div class="analysis-row">
@@ -179,12 +180,12 @@
                 </section>
 
 
-                <!-- SAFETY SCORE -->
+                <!-- RISK SCORE -->
 
                 <section class="score-card">
 
                     <p class="card-label">
-                        SAFETY SCORE
+                        RISK SCORE
                     </p>
 
                     <div class="score">
@@ -328,8 +329,9 @@
 
 
                 <p class="description">
-                    Detailed detection results will appear
-                    here once website analysis is implemented.
+                    Local analysis checks URL patterns and
+                    password-form behavior. Threat database
+                    checks are not implemented yet.
                 </p>
 
             </section>
@@ -640,6 +642,8 @@
     <!-- JAVASCRIPT -->
     <!-- ====================================== -->
 
+    <!-- Detection engine must load before popup.js -->
+    <script src="../analysis/detection.js"></script>
     <script src="popup.js"></script>
 
 </body>
