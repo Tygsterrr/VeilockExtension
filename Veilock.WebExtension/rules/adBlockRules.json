@@ -9,7 +9,11 @@
     "condition":  {
 
       "requestDomains": [
-        "doubleclick.net"
+        "doubleclick.net",
+        "googlesyndication.com",
+        "rubiconproject.com",
+        "adnxs.com",
+        "ads.aps.amazon-adsystem.com"
       ],
 
       "resourceTypes": [
@@ -19,6 +23,49 @@
         "xmlhttprequest"
       ]
     }
+  },
 
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||v.asrvr.org/fyg06bx/99n0wkz/lcwwlfjwds/",
+      "resourceTypes": [
+        "media"
+      ]
+    }
+  },
+
+  {
+    "id": 3,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||s0.2mdn.net/sadbundle/",
+      "resourceTypes": [
+        "sub_frame"
+      ]
+    }
+  },
+
+  {
+    "id": 4,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "8.stg.html-load.cc"
+      ],
+      "resourceTypes": [
+        "sub_frame"
+      ]
+    }
   }
 ]

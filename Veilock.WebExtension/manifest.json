@@ -39,6 +39,14 @@
         "matches": ["<all_urls>"],
         "js": ["content/content.js"],
         "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "https://coolmathgames.com/*",
+          "https://*.coolmathgames.com/*"
+        ],
+        "js": ["content/adCosmetic.js"],
+        "run_at": "document_idle"
       }
     ]
   }
