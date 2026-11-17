@@ -1,6 +1,5 @@
-# Repository for University of Cincinnati Senior Design Project 2026-2027
+# Repository for Team 58 University of Cincinnati Senior Design Project 2026-2027
 By Scott Goggin, Andrew Hoffbauer, Mitch Lovdal, Tygo Seegers, & Jay Burlew​
-TEAM 58
 
 -------------------------------------------------------------------------------------------------------------
 
