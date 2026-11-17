@@ -15,19 +15,19 @@ Installation guide (updated 11/16/2026):
 4. Customize Veilock's interface to your liking through the settings page
 5. Have fun surfing the web knowing your risk!
 
-About (updated 11/16/2026):
+About (updated 11/16/2026):\
 Veilock is a browser extension that aims to help users surf the web safely. Although a prototype, Veilock has some functional features to assign risk scores for questionable websites, block unwanted ads, and generate random passwords for users to use on their sign up pages.
 
 Latest release notes (updated 11/16/2026):
-Added additional ad blocking rules
-Created a fake demonstration site (found in /tests)
-Updated README file
+- Added additional ad blocking rules
+- Created a fake demonstration site (found in /tests)
+- Updated and formatted README file
 
 Browser compatibility (updated 11/16/2026):
-Chrome
+- Chrome
 
 Future plans (updated 11/16/2026):
-Different broswer support
-Fully functioning password manager
-Further ad-blocking development
-Security patching
+- Different broswer support
+- Fully functioning password manager
+- Further ad-blocking development
+- Security patching
